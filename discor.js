@@ -1,7 +1,7 @@
 // Depedencies
 const prompt = require('prompt-sync')();
 const chalk = require('chalk');
-const fs = require('fs');
+const fs = require('fs').promises;
 
 const ascii = require('./utils/ascii');
 
@@ -27,34 +27,34 @@ const getInfo = () => {
 
     if(botVersion.length <= 0) {
         botVersion = '1.0.0'
-        createBotLocal(botName, botVersion, botDescription, botToken);
     } else if (botDescription.length <= 0) {
         botDescription = `${botName} made with Discor.`
-        createBotLocal(botName, botVersion, botDescription, botToken);
-    } else {
-        createBotLocal(botName, botVersion, botDescription, botToken);
     }
-
+    createBotLocal(botName, botVersion, botDescription, botToken)
+      .catch(console.error);
 }
 
 
-const createBotLocal = (botName, botVersion, botDescription, botToken) => {
+const createBotLocal = async (botName, botVersion, botDescription, botToken) => {
 
     const botDir = `${botName}Dir`;
 
-    if(!fs.existsSync(botDir)) {
-        fs.mkdirSync(botDir)
+    if(!(await fs.stat(botDir).catch(() => false))) {
+        await fs.mkdir(botDir);
     }
 
     process.chdir(`./${botName}Dir`)
-    createBotFile(botName, botVersion, botDescription, botToken, botDir);
+    return createBotFile(botName, botVersion, botDescription, botToken, botDir);
 }
 
 
-const createBotFile = (botName, botVersion, botDescription, botToken, botDir) => {
+const createBotFile = async (botName, botVersion, botDescription, botToken, botDir) => {
 
     const botCode = `
     const Discord = require('discord.js');
+    const dotenv = require('dotenv');
+
+    dotenv.config();
     const client = new Discord.Client();
         
     client.on('ready', () => {
@@ -64,18 +64,18 @@ const createBotFile = (botName, botVersion, botDescription, botToken, botDir) =>
         
     client.on('message', msg => {
         if (msg.content === 'ping') {
-        msg.reply('Pong!');
+            msg.reply('Pong!');
         }
     });
         
-    client.login('${botToken}');
+    client.login(process.env.TOKEN);
     `
-
-    fs.writeFile('bot.js', botCode, function(err) {
-        if(err) throw err;
-        console.log(chalk.greenBright("\n[!] ~> Bot created"));
-        console.log(chalk.blueBright(`\nTo start your bot execute: \n- cd ${botDir}\n- node bot.js`))
-    });
+    const env = 'TOKEN=' + botToken;
+    
+    await fs.writeFile('bot.js', botCode);
+    await fs.writeFile('.env', env);
+    console.log(chalk.greenBright("\n[!] ~> Bot created"));
+    console.log(chalk.blueBright(`\nTo start your bot execute: \n- cd ${botDir}\n- node bot.js`))
 }
 
 menu();
