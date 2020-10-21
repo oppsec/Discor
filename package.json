@@ -1,0 +1,21 @@
+{
+  "name": "discor",
+  "version": "1.0.0",
+  "description": "Automate discordjs bot creation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "javascript",
+    "bot"
+  ],
+  "author": "dsm",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "discord.js": "^12.4.0",
+    "prompt-sync": "^4.2.0"
+  }
+}
