@@ -1,11 +1,12 @@
 // Depedencies
-const prompt = require('prompt-sync')(); // User input
-const chalk = require('chalk'); // Color
-const fs = require('fs'); // File Sync
+const prompt = require('prompt-sync')();
+const chalk = require('chalk');
+const fs = require('fs');
 
-const ascii = require('./utils/ascii'); // Discor Ascii
+const ascii = require('./utils/ascii');
 
 
+// Discor
 const clearTerminal = () => {
     console.clear();
 }
@@ -24,8 +25,10 @@ const getInfo = () => {
     let botDescription = prompt(chalk.greenBright("[#] ~> Bot description: (optional) "));
     const botToken = prompt("[#] ~> Bot token: ");
 
-    if(botVersion.length <= 0 || botDescription.length <= 0) {
+    if(botVersion.length <= 0) {
         botVersion = '1.0.0'
+        createBotLocal(botName, botVersion, botDescription, botToken);
+    } else if (botDescription.length <= 0) {
         botDescription = `${botName} made with Discor.`
         createBotLocal(botName, botVersion, botDescription, botToken);
     } else {
@@ -67,7 +70,6 @@ const createBotFile = (botName, botVersion, botDescription, botToken, botDir) =>
         
     client.login('${botToken}');
     `
-
 
     fs.writeFile('bot.js', botCode, function(err) {
         if(err) throw err;
