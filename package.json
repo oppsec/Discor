@@ -1,7 +1,7 @@
 {
   "name": "discor",
-  "version": "1.0.0",
-  "description": "Automate discordjs bot creation",
+  "version": "1.1.0",
+  "description": "Automate discord bot creation",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +16,8 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "discord.js": "^12.4.0",
+    "image-data-uri": "^2.0.1",
+    "node-fetch": "^2.6.1",
     "prompt-sync": "^4.2.0"
   }
 }
