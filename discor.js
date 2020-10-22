@@ -1,81 +1,96 @@
 // Depedencies
 const prompt = require('prompt-sync')();
-const chalk = require('chalk');
 const fs = require('fs').promises;
 
+const { green, blue, yellow } = require('./utils/color');
 const ascii = require('./utils/ascii');
 
 
-// Discor
-const clearTerminal = () => {
+class Bot {
+    constructor(botName, botVersion, botDesc, botToken ) {
+        this.botName = botName;
+        this.botVersion = botVersion;
+        this.botDesc = botDesc;
+        this.botToken = botToken;
+    }
+}
+
+
+const Menu = () => {
     console.clear();
+    console.log(green(ascii));
+    botInfo();
 }
 
 
-const menu = () => {
-    clearTerminal();
-    console.log(chalk.greenBright(ascii));
-    getInfo();
-}
+const botInfo = () => {
 
-const getInfo = () => {
+    const myBotName = prompt(green("[?] - Bot name ~> "));
+    let myBotVersion = prompt("[?] - Bot version ~> (optional) ");
+    let myBotDesc = prompt(green("[?] - Bot description ~> (optional) "));
+    const myBotToken = prompt("[?] - Bot token ~> ");
 
-    const botName = prompt(chalk.greenBright("[#] ~> Bot name: "));
-    let botVersion = prompt("[#] ~> Bot version: (optional) ");
-    let botDescription = prompt(chalk.greenBright("[#] ~> Bot description: (optional) "));
-    const botToken = prompt("[#] ~> Bot token: ");
+    if(myBotVersion.length <= 0) {
+        myBotVersion = '1.0.0';
+    } 
 
-    if(botVersion.length <= 0) {
-        botVersion = '1.0.0'
-    } else if (botDescription.length <= 0) {
-        botDescription = `${botName} made with Discor.`
-    }
-    createBotLocal(botName, botVersion, botDescription, botToken)
-      .catch(console.error);
-}
-
-
-const createBotLocal = async (botName, botVersion, botDescription, botToken) => {
-
-    const botDir = `${botName}Dir`;
-
-    if(!(await fs.stat(botDir).catch(() => false))) {
-        await fs.mkdir(botDir);
+    if(myBotToken.length <= 58) {
+        console.log(yellow("\nWARNING: Your TOKEN is invalid"));
     }
 
-    process.chdir(`./${botName}Dir`)
-    return createBotFile(botName, botVersion, botDescription, botToken, botDir);
+    const myBot = new Bot(myBotName, myBotVersion, myBotDesc, myBotToken);
+    createBotFolder(myBotName, myBot);
+
+}
+
+const createBotFolder = async (myBotName, myBot) => {
+
+    const botFolder = `${myBotName}dir`;
+
+    if(!(await fs.stat(botFolder).catch(() => false))) {
+        await fs.mkdir(botFolder);
+    }
+
+    process.chdir(`./${myBotName}dir`);
+
+    createBotFile(myBot, botFolder);
 }
 
 
-const createBotFile = async (botName, botVersion, botDescription, botToken, botDir) => {
+const createBotFile = async (myBot, botFolder) => {
 
-    const botCode = `
-    const Discord = require('discord.js');
-    const dotenv = require('dotenv');
+    const botCodeFile = `
+const Discord = require('discord.js');
+const dotenv = require('dotenv');
 
-    dotenv.config();
-    const client = new Discord.Client();
+dotenv.config();
+const client = new Discord.Client();
         
-    client.on('ready', () => {
-        console.log('- ${botName} online');
-        console.log('- Version: ${botVersion} | Description: ${botDescription}');
-    });
+client.on('ready', () => {
+    console.log('- ${myBot.botName} online');
+    console.log('- Version: ${myBot.botVersion} | Description: ${myBot.botDesc}');
+});
         
-    client.on('message', msg => {
-        if (msg.content === 'ping') {
-            msg.reply('Pong!');
-        }
-    });
+client.on('message', msg => {
+    if (msg.content === 'ping') {
+        msg.reply('Pong!');
+    }
+});
         
-    client.login(process.env.TOKEN);
-    `
-    const env = 'TOKEN=' + botToken;
+client.login(process.env.TOKEN);
+`
+
+    const env = 'TOKEN=' + myBot.botToken;
     
-    await fs.writeFile('bot.js', botCode);
+    await fs.writeFile('bot.js', botCodeFile);
     await fs.writeFile('.env', env);
-    console.log(chalk.greenBright("\n[!] ~> Bot created"));
-    console.log(chalk.blueBright(`\nTo start your bot execute: \n- cd ${botDir}\n- node bot.js`))
+
+    console.log(green("\n[!] ~> Bot created"));
+    console.log(blue(`\nTo start your bot execute: \n- cd ${botFolder}\n- node bot.js`))
+
 }
 
-menu();
+
+
+
+Menu();
