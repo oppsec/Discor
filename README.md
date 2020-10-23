@@ -4,7 +4,7 @@
 
 > Fast discord bots creation.
 
-![version](https://img.shields.io/badge/VERSION-1.1.0-brightgreen.svg?style=for-the-badge)
+![version](https://img.shields.io/badge/VERSION-1.1.1-brightgreen.svg?style=for-the-badge)
 ![license](https://img.shields.io/badge/LICENSE-MIT-blue.svg?style=for-the-badge)
 
 <br><br>
