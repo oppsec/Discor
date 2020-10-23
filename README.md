@@ -15,11 +15,11 @@
 <br><br>
 
 ## ⚡ Quickstart
-1. Download **Discor** with `Code > Download ZIP` button or `git clone https://github.com/oppsec/Discor.git`
+1. Download **Discor** clicking on `Code > Download ZIP` button or `git clone https://github.com/oppsec/Discor.git`
 2. Create a application on [Discord Developer Portal](https://discord.com/developers/applications)
-3. Turn the application in a bot
-4. Copy the bot token
-5. Execute **Discor**
+3. Transform your application on a bot
+4. Copy your bot token
+5. Execute 🛸 **Discor**
 
 <br><br>
 
