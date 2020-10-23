@@ -1,6 +1,6 @@
 # 🛸 Discor
 
-<img src="./utils/discor.gif" width="800">
+<img src="./utils/banner.png" widht="100" height="400"><br>
 
 > Fast discord bots creation.
 
@@ -26,6 +26,12 @@
 ## ⚙️ Setup
 1. You need [NodeJS](http://nodejs.org/) installed.
 2. Install [DiscordJS](https://discord.js.org/) with `npm i discord.js`
+
+<br><br>
+
+## 👀 Preview
+
+<img src="./utils/discor.gif" width="800">
 
 <br><br>
 
