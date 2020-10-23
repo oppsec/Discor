@@ -45,13 +45,13 @@ const botInfo = () => {
 
 const createBotFolder = async (myBotName, myBot) => {
 
-    const botFolder = `${myBotName}dir`;
+    const botFolder = `my-creations/${myBotName}-dir`;
 
     if(!(await fs.stat(botFolder).catch(() => false))) {
         await fs.mkdir(botFolder);
     }
 
-    process.chdir(`./${myBotName}dir`);
+    process.chdir(`./${botFolder}`);
 
     createBotFile(myBot, botFolder);
 }
