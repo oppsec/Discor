@@ -45,13 +45,13 @@ const botInfo = () => {
 
 const createBotFolder = async (myBotName, myBot) => {
 
-    const botFolder = `${myBotName}dir`;
+    const botFolder = `my-creations/${myBotName}-dir`;
 
     if(!(await fs.stat(botFolder).catch(() => false))) {
         await fs.mkdir(botFolder);
     }
 
-    process.chdir(`./${myBotName}dir`);
+    process.chdir(`./${botFolder}`);
 
     createBotFile(myBot, botFolder);
 }
@@ -59,26 +59,7 @@ const createBotFolder = async (myBotName, myBot) => {
 
 const createBotFile = async (myBot, botFolder) => {
 
-    const botCodeFile = `
-const Discord = require('discord.js');
-const dotenv = require('dotenv');
-
-dotenv.config();
-const client = new Discord.Client();
-        
-client.on('ready', () => {
-    console.log('- ${myBot.botName} online');
-    console.log('- Version: ${myBot.botVersion} | Description: ${myBot.botDesc}');
-});
-        
-client.on('message', msg => {
-    if (msg.content === 'ping') {
-        msg.reply('Pong!');
-    }
-});
-        
-client.login(process.env.TOKEN);
-`
+    const botCodeFile = require('./bot-code-files/baseCode')(myBot);
 
     const env = 'TOKEN=' + myBot.botToken;
     
@@ -89,8 +70,6 @@ client.login(process.env.TOKEN);
     console.log(blue(`\nTo start your bot execute: \n- cd ${botFolder}\n- node bot.js`))
 
 }
-
-
 
 
 Menu();
