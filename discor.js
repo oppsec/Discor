@@ -2,16 +2,18 @@
 const prompt = require('prompt-sync')();
 const fs = require('fs').promises;
 
-const { green, blue, yellow } = require('./utils/color');
-const ascii = require('./utils/ascii');
+const { green, blue, yellow, red } = require('./utils/code/color');
+const ascii = require('./utils/code/ascii');
+const { fstatSync } = require('fs');
 
 
 class Bot {
-    constructor(botName, botVersion, botDesc, botToken ) {
+    constructor(botName, botVersion, botDesc, botToken, botLanguage ) {
         this.botName = botName;
         this.botVersion = botVersion;
         this.botDesc = botDesc;
         this.botToken = botToken;
+        this.botLanguage = botLanguage;
     }
 }
 
@@ -24,6 +26,15 @@ const Menu = () => {
 
 
 const botInfo = () => {
+
+    console.log(green('[?] - Select the bot language: JavaScript or Python'))
+    const myBotLanguage = prompt("[?] - Bot language ~> ");
+
+    if(myBotLanguage !== "JavaScript" && myBotLanguage !== "Python") {
+        return console.log(red("\n[!] - Invalid bot language selected"));
+    }
+
+    console.log('\n')
 
     const myBotName = prompt(green("[?] - Bot name ~> "));
     let myBotVersion = prompt("[?] - Bot version ~> (optional) ");
@@ -38,14 +49,14 @@ const botInfo = () => {
         console.log(yellow("\nWARNING: Your TOKEN is invalid"));
     }
 
-    const myBot = new Bot(myBotName, myBotVersion, myBotDesc, myBotToken);
-    createBotFolder(myBotName, myBot);
+    const myBot = new Bot(myBotName, myBotVersion, myBotDesc, myBotToken, myBotLanguage);
+    createBotFolder(myBotName, myBot, myBotLanguage);
 
 }
 
-const createBotFolder = async (myBotName, myBot) => {
+const createBotFolder = async (myBotName, myBot, myBotLanguage) => {
 
-    const botFolder = `my-creations/${myBotName}-dir`;
+    const botFolder = `${myBotName}-dir`;
 
     if(!(await fs.stat(botFolder).catch(() => false))) {
         await fs.mkdir(botFolder);
@@ -53,17 +64,23 @@ const createBotFolder = async (myBotName, myBot) => {
 
     process.chdir(`./${botFolder}`);
 
-    createBotFile(myBot, botFolder);
+    createBotFile(myBot, botFolder, myBotLanguage);
 }
 
 
-const createBotFile = async (myBot, botFolder) => {
+const createBotFile = async (myBot, botFolder, myBotLanguage) => {
 
-    const botCodeFile = require('./bot-code-files/baseCode')(myBot);
+    const JSCode = require('./botCode/JSBot')(myBot);
+    const PyCode = require('./botCode/PyBot')(myBot);
 
     const env = 'TOKEN=' + myBot.botToken;
     
-    await fs.writeFile('bot.js', botCodeFile);
+    if(myBotLanguage === "JavaScript") {
+        await fs.writeFile('bot.js', JSCode)
+    } else {
+        await fs.writeFile('bot.py', PyCode)
+    }
+
     await fs.writeFile('.env', env);
 
     console.log(green("\n[!] ~> Bot created"));

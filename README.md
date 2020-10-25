@@ -1,10 +1,10 @@
 # 🛸 Discor
 
-<img src="./utils/banner.png" widht="100" height="400"><br>
+<img src="./utils/img/banner.png" widht="100" height="400"><br>
 
 > Fast discord bots creation.
 
-![version](https://img.shields.io/badge/VERSION-1.1.1-brightgreen.svg?style=for-the-badge)
+![version](https://img.shields.io/badge/VERSION-1.2.1-brightgreen.svg?style=for-the-badge)
 ![license](https://img.shields.io/badge/LICENSE-MIT-blue.svg?style=for-the-badge)
 
 <br><br>
