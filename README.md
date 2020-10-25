@@ -31,7 +31,7 @@
 
 ## 👀 Preview
 
-<img src="./utils/discor.gif" width="800">
+<img src="./utils/img/discor.gif" width="800">
 
 <br><br>
 
