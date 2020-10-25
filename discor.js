@@ -4,7 +4,6 @@ const fs = require('fs').promises;
 
 const { green, blue, yellow, red } = require('./utils/code/color');
 const ascii = require('./utils/code/ascii');
-const { fstatSync } = require('fs');
 
 
 class Bot {
