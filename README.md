@@ -2,36 +2,37 @@
 
 <img src="./utils/img/banner.png" widht="100" height="400"><br>
 
-> Fast discord bots creation.
+![version](https://img.shields.io/badge/Version-1.2.1-brightgreen.svg?style=for-the-badge)
+![license](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
+![npm](https://img.shields.io/badge/NPM-v12.19-purple.svg?style=for-the-badge)
 
-![version](https://img.shields.io/badge/VERSION-1.2.1-brightgreen.svg?style=for-the-badge)
-![license](https://img.shields.io/badge/LICENSE-MIT-blue.svg?style=for-the-badge)
+> Fast discord bots creation.
 
 <br><br>
 
-## 🤔 What is this?
+## 🤔 What is Discor?
 🛸 **Discor** is an NodeJS CLI application to automate the process of discord bots creation.
 
 <br><br>
 
-## ⚡ Quickstart
-1. Download **Discor** clicking on `Code > Download ZIP` button or `git clone https://github.com/oppsec/Discor.git`;
-2. Create a application on [Discord Developer Portal](https://discord.com/developers/applications);
-3. Transform your application on a bot;
-4. Copy your bot token;
-5. Execute 🛸 **Discor**
+## ⚙️ Set-Up
+1. Install [NodeJS](http://nodejs.org/) on your machine
+2. Install the [DiscordJS](https://discord.js.org/) librarie with `npm i discord.js`
 
 <br><br>
 
-## ⚙️ Setup
-1. You need [NodeJS](http://nodejs.org/) installed.
-2. Install [DiscordJS](https://discord.js.org/) with `npm i discord.js`
+## ⚡ Quickstart
+1. Clone the repository with `git clone https://github.com/oppsec/Discord.git` or just click in `Code > Download ZIP`
+2. Type `npm i` to install the packages
+3. Create a application on [Discord Developer Portal](https://discord.com/developers/applications)
+4. Transform your application on a bot and copy the token
+5. Execute Discor and insert the bot token.
 
 <br><br>
 
 ## 👀 Preview
 
-<img src="./utils/discor.gif" width="800">
+<img src="./utils/img/discor.gif" width="800">
 
 <br><br>
 
