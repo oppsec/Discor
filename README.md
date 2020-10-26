@@ -2,7 +2,7 @@
 
 <img src="./src/Views/img/banner.png" widht="100" height="400"><br>
 
-![version](https://img.shields.io/badge/Version-1.2.1-brightgreen.svg?style=for-the-badge)
+![version](https://img.shields.io/badge/Version-1.2.2-brightgreen.svg?style=for-the-badge)
 ![license](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
 ![npm](https://img.shields.io/badge/NPM-v12.19-purple.svg?style=for-the-badge)
 
@@ -16,7 +16,7 @@
 <br><br>
 
 ## ⚙️ Set-Up
-1. Install [NodeJS](http://nodejs.org/) on your machine
+1. Install [NodeJS](http://nodejs.org/) on your machine or [Python](https://www.python.org/)
 2. Install the [DiscordJS](https://discord.js.org/) librarie with `npm i discord.js`
 
 <br><br>
