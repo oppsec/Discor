@@ -46,7 +46,7 @@ const botInfo = () => {
     } 
 
     if(myBotToken.length <= 58) {
-        console.log(yellow("\nWARNING: Your TOKEN is invalid"));
+        console.log(yellow("\nWARNING: Your TOKEN is invalid!"));
     }
 
     const myBot = new Bot(myBotName, myBotVersion, myBotDesc, myBotToken, myBotLanguage);
@@ -110,10 +110,10 @@ const installLibraries = async (myBotLanguage, botFolder) => {
     }
 
 
-    console.log(blue('[#] ~> Installing libraries...'))
+    console.log(blue('\n[#] ~> Installing libraries...'))
 
-    await console.log(green("\n[!] ~> Bot created"));
-    await console.log(blue(`\nTo start your bot execute: \n- cd ${botFolder}\n- node bot.js`))
+    await console.log(green("\n[!] ~> Bot created \n"));
+    await console.log(blue(`To start your bot execute: \n- cd ${botFolder}\n- node bot.js\n`))
 
 }
 
