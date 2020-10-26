@@ -1,6 +1,6 @@
 # 🛸 Discor
 
-<img src="./utils/img/banner.png" widht="100" height="400"><br>
+<img src="./src/Views/img/banner.png" widht="100" height="400"><br>
 
 ![version](https://img.shields.io/badge/Version-1.2.1-brightgreen.svg?style=for-the-badge)
 ![license](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
@@ -32,7 +32,7 @@
 
 ## 👀 Preview
 
-<img src="./utils/img/discor.gif" width="800">
+<img src="./src/Views/img/preview.gif" width="800">
 
 <br><br>
 
