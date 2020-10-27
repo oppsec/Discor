@@ -34,29 +34,23 @@ const botInfo = () => {
         return console.log(red("\n[!] - Invalid bot language selected"));
     }
 
-    console.log('\n')
-
-    const myBotName = prompt(green("[?] - Bot name ~> "));
+    const myBotName = prompt(green("\n[?] - Bot name ~> "));
     let myBotVersion = prompt("[?] - Bot version ~> (optional) ");
     let myBotDesc = prompt(green("[?] - Bot description ~> (optional) "));
     const myBotToken = prompt("[?] - Bot token ~> ");
 
-    if(myBotVersion.length <= 0) {
-        myBotVersion = '1.0.0';
-    } 
-
-    if(myBotToken.length <= 58) {
-        console.log(yellow("\nWARNING: Your TOKEN is invalid!"));
-    }
+    // Check version and token values
+    myBotVersion.length <= 0 ? myBotVersion = '1.0.0' : myBotVersion;
+    myBotToken.length <= 58 ? console.log(yellow("\nWARNING: Your TOKEN is invalid!")) : myBotToken;
 
     const myBot = new Bot(myBotName, myBotVersion, myBotDesc, myBotToken, myBotLanguage);
-    createBotFolder(myBotName, myBot, myBotLanguage);
+    createBotFolder(myBot);
 
 }
 
-const createBotFolder = async (myBotName, myBot, myBotLanguage) => {
+const createBotFolder = async (myBot) => {
 
-    const botFolder = `${myBotName}-dir`;
+    const botFolder = `${myBot.botName}-dir`;
 
     if(!(await fs.stat(botFolder).catch(() => false))) {
         await fs.mkdir(botFolder);
@@ -64,56 +58,34 @@ const createBotFolder = async (myBotName, myBot, myBotLanguage) => {
 
     process.chdir(`./${botFolder}`);
 
-    createBotFile(myBot, botFolder, myBotLanguage);
+    createBotFile(myBot, botFolder);
 }
 
 
-const createBotFile = async (myBot, botFolder, myBotLanguage) => {
+const createBotFile = async (myBot, botFolder) => {
 
-    const JSCode = require('../Controllers/core/JSBot')(myBot);
-    const PyCode = require('../Controllers/core/PyBot')(myBot);
+    const jsBot = require('../Controllers/core/JSBot')(myBot);
+    const pyBot = require('../Controllers/core/PyBot')(myBot);
 
     const env = 'TOKEN=' + myBot.botToken;
 
-    myBotLanguage === "JavaScript" ? await fs.writeFile('bot.js', JSCode)
-                                   : await fs.writeFile('bot.py', PyCode)
+    myBot.botLanguage === "JavaScript" ? await fs.writeFile('bot.js', jsBot)
+                                       : await fs.writeFile('bot.py', pyBot)
     
     await fs.writeFile('.env', env);
 
-    installLibraries(myBotLanguage, botFolder)
+    installLibraries(myBot, botFolder)
 
 }
 
-const installLibraries = async (myBotLanguage, botFolder) => {
+const installLibraries = async (myBot, botFolder) => {
 
-    myBotLanguage === "JavaScript" ? installJSLibraries()
-                                   : installPyLibraries()
-
-
-    function installJSLibraries() {
-        exec("npm i discord.js", (error) => {
-            if(error) {
-                console.log(red(`Error: ${error.message}`))
-                return;
-            }
-        });
-    }
-
-
-    function installPyLibraries() {
-        exec("pip install -U discord.py", (error) => {
-            if(error) {
-                console.log(red(`Error: ${error.message}`))
-                return;
-            }
-        });
-    }
-
+    myBot.botLanguage === "JavaScript" ? exec("npm i discord.js")
+                                       : exec("pip install -U discord.py");
 
     console.log(blue('\n[#] ~> Installing libraries...'))
-
-    await console.log(green("\n[!] ~> Bot created \n"));
-    await console.log(blue(`To start your bot execute: \n- cd ${botFolder}\n- node bot.js\n`))
+    console.log(green("\n[!] ~> Setting up...\n"));
+    console.log(blue(`To start your bot execute: \n- cd ${botFolder}\n- node bot.js\n`))
 
 }
 
