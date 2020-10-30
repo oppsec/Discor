@@ -17,8 +17,6 @@
 
 ## ⚙️ Set-Up
 - Install [NodeJS](http://nodejs.org/) or [Python](https://www.python.org/) on your machine 
-- *For NodeJS* - Install the [DiscordJS](https://discord.js.org/) librarie with `npm i discord.js`
-- *For Python* - Install the [DiscordPy](https://discordpy.readthedocs.io/) with `pip install -U discord.py`
 
 <br><br>
 
