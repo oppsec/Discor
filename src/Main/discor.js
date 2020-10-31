@@ -1,6 +1,7 @@
 // Depedencies
 const prompt = require('prompt-sync')()
 const fs = require('fs').promises
+const path = require('path');
 const { exec } = require('child_process')
 
 const { green, blue, yellow, red } = require('../Views/design/color')
@@ -21,7 +22,17 @@ class Bot {
 const Menu = () => {
     console.clear();
     console.log(green(ascii));
-    botInfo();
+    checkVersion()
+}
+
+
+const checkVersion = async () => {
+    const currentVersion = await fs.readFile('.version', 'utf-8', () => {})
+    const packageFile = await fs.readFile('../../package.json', 'utf-8', () => {})
+    const packageVersion = JSON.parse(packageFile)
+
+    packageVersion.version !=  currentVersion ? console.log(red('[X] - Your Discor is outdated, consider updating.\n'))
+                                              : console.log(green('[!] - Updated\n')); setTimeout(botInfo, 2000)
 }
 
 
@@ -57,7 +68,6 @@ const createBotFolder = async (myBot) => {
     }
 
     process.chdir(`./${botFolder}`);
-
     createBotFile(myBot, botFolder);
 }
 
