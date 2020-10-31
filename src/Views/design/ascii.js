@@ -4,7 +4,7 @@ const discorAscii = `
     (O O)
      \=/
     .-"-.
-   //\ /\\               Discor v1.2.2
+   //\ /\\               Discor v1.2.3
  _// / \ \\_        Fast discord bots creation
 =./ {,-.} \.=
     || ||
