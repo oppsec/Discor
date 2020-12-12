@@ -16,7 +16,7 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "child_process": "^1.0.2",
-    "discord.js": "^12.4.1",
+    "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "image-data-uri": "^2.0.1",
     "node-fetch": "^2.6.1",
