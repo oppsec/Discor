@@ -1,14 +1,31 @@
-module.exports = function createPyBot(myBot) 
-{
-    return `
+const Generator =  require("./Generator.js");
+const { exec } = require('child_process')
+
+module.exports = class PYBot extends Generator {
+ 
+    /**
+     * @override
+     * @param {object} env 
+     */
+    fetchData(bot) {
+        return `
 import discord
 
 class MyClient(discord.Client):
     async def on_ready(self):
-        print('Logged on as ${myBot.botName}')
-        print('- Version: ${myBot.botVersion} | Description: ${myBot.botDesc}')
+        print('Logged on as ${bot.name}')
+        print('- Version: ${bot.version} | Description: ${bot.description}')
     
 client = MyClient()
-client.run(${myBot.botToken})
-`
+client.run(${bot.token})
+        `
+    }
+    
+    /**
+     * @override
+     */
+    installLibraries(directory){
+        process.chdir(directory);
+        exec(`pip install -U discord.py`);
+    }
 }

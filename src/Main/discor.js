@@ -1,20 +1,33 @@
 // Depedencies
 const prompt = require('prompt-sync')()
 const fs = require('fs').promises
-const path = require('path');
-const { exec } = require('child_process')
+const path = require('path')
 
 const { green, blue, yellow, red } = require('../Views/design/color')
 const ascii = require('../Views/design/ascii')
+const JSBot = require('../Controllers/core/JSBot')
+const PYBot = require('../Controllers/core/PyBot')
 
 
 class Bot {
-    constructor(botName, botVersion, botDesc, botToken, botLanguage ) {
-        this.botName = botName;
-        this.botVersion = botVersion;
-        this.botDesc = botDesc;
-        this.botToken = botToken;
-        this.botLanguage = botLanguage;
+    constructor(name, version, description, token, language, fileSystem ) {
+        this.name = name;
+        this.version = version;
+        this.description = description;
+        this.token = token;
+        this.language = language;
+        this.fileSystem = fileSystem;
+    }
+}
+
+const language = {
+    javascript: {
+        ext: 'js',
+        generator: JSBot
+    },
+    python : {
+        ext: 'py',
+        generator: PYBot
     }
 }
 
@@ -27,76 +40,56 @@ const Menu = () => {
 
 
 const checkVersion = async () => {
-    const currentVersion = await fs.readFile('.version', 'utf-8', () => {})
-    const packageFile = await fs.readFile('../../package.json', 'utf-8', () => {})
-    const packageVersion = JSON.parse(packageFile)
+    try {
 
-    packageVersion.version !=  currentVersion ? console.log(red('[X] - Your Discor is outdated, consider updating.\n'))
-                                              : console.log(green('[!] - Updated\n')); setTimeout(botInfo, 2000)
+        
+        const currentVersion = await fs.readFile(path.resolve(__dirname, '.version'), 'utf-8', () => {})
+        const packageFile = await fs.readFile(path.resolve(__dirname,'..','..','package.json'), 'utf-8', () => {})
+        const packageVersion = JSON.parse(packageFile)
+    
+        packageVersion.version !=  currentVersion ? console.log(red('[X] - Your Discor is outdated, consider updating.\n'))
+                                                  : console.log(green('[!] - Updated\n')); setTimeout(botInfo, 2000)
+    } catch (error) {
+        console.log(red(error))
+    }
 }
 
 
-const botInfo = () => {
+const botInfo = async () => {
 
     console.log(green('[?] - Select the bot language: JavaScript or Python'))
-    const myBotLanguage = prompt("[?] - Bot language ~> ");
+    const botLanguage = prompt("[?] - Bot language ~> ").trim().toLowerCase();
 
-    if(myBotLanguage !== "JavaScript" && myBotLanguage !== "Python") {
+    if(language[botLanguage] === undefined) {
         return console.log(red("\n[!] - Invalid bot language selected"));
     }
 
-    const myBotName = prompt(green("\n[?] - Bot name ~> "));
-    let myBotVersion = prompt("[?] - Bot version ~> (optional) ");
-    let myBotDesc = prompt(green("[?] - Bot description ~> (optional) "));
-    const myBotToken = prompt("[?] - Bot token ~> ");
+    const name = prompt(green("\n[?] - Bot name ~> ")).trim();
+    let version = prompt("[?] - Bot version ~> (optional) ") || '1.0.0'.trim();
+    const description = prompt(green("[?] - Bot description ~> (optional) ")).trim();
+    const token = prompt("[?] - Bot token ~> ").trim();
 
     // Check version and token values
-    myBotVersion.length <= 0 ? myBotVersion = '1.0.0' : myBotVersion;
-    myBotToken.length <= 58 ? console.log(yellow("\nWARNING: Your TOKEN is invalid!")) : myBotToken;
-
-    const myBot = new Bot(myBotName, myBotVersion, myBotDesc, myBotToken, myBotLanguage);
-    createBotFolder(myBot);
-
-}
-
-const createBotFolder = async (myBot) => {
-
-    const botFolder = `${myBot.botName}-dir`;
-
-    if(!(await fs.stat(botFolder).catch(() => false))) {
-        await fs.mkdir(botFolder);
+    token.length <= 58 ? console.log(yellow("\nWARNING: Your TOKEN is invalid!")) : token;
+    
+    const fileSystem = {
+        filename: `bot.${language[botLanguage].ext}`,
+        directory: name,
+        path: path.resolve(`${name}-dir`,`bot.${language[botLanguage].ext}`)
     }
 
-    process.chdir(`./${botFolder}`);
-    createBotFile(myBot, botFolder);
-}
+    try{
+        const bot = new Bot(name, version, description, token, botLanguage);
+        const generator = new language[botLanguage].generator();
 
-
-const createBotFile = async (myBot, botFolder) => {
-
-    const jsBot = require('../Controllers/core/JSBot')(myBot);
-    const pyBot = require('../Controllers/core/PyBot')(myBot);
-
-    const env = 'TOKEN=' + myBot.botToken;
-
-    myBot.botLanguage === "JavaScript" ? await fs.writeFile('bot.js', jsBot)
-                                       : await fs.writeFile('bot.py', pyBot)
-    
-    await fs.writeFile('.env', env);
-
-    installLibraries(myBot, botFolder)
-
-}
-
-const installLibraries = async (myBot, botFolder) => {
-
-    myBot.botLanguage === "JavaScript" ? exec("npm i discord.js")
-                                       : exec("pip install -U discord.py");
-
-    console.log(blue('\n[#] ~> Installing libraries...'))
-    console.log(green("\n[!] ~> Setting up...\n"));
-    console.log(blue(`To start your bot execute: \n- cd ${botFolder}\n- node bot.js\n`))
-
+        await generator.generate(bot,fileSystem);
+        
+        console.log(blue('\n[#] ~> Installing libraries...'))
+        console.log(green("\n[!] ~> Setting up...\n"));
+        console.log(blue(`To start your bot execute: \n- cd ${fileSystem.directory}\n- node bot.js\n`))
+    } catch (e){
+        console.log(red(e));
+    }
 }
 
 
