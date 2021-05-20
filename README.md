@@ -11,12 +11,12 @@
 <br><br>
 
 ## 🤔 What is Discor?
-🛸 **Discor** is an NodeJS CLI application to automate the process of discord bots creation.
+🛸 **Discor** is a Node.js tool created to help people which wants to create Discord bots more fast.
 
 <br><br>
 
 ## ⚙️ Set-Up
-- Install [NodeJS](http://nodejs.org/) or [Python](https://www.python.org/) on your machine 
+- Install [Node.js](http://nodejs.org/) or/and [Python](https://www.python.org/) on your machine 
 
 <br><br>
 
@@ -24,8 +24,8 @@
 1. Download the .RAR file in Releases page
 2. Follow the instructions on the release section
 3. Create a application on [Discord Developer Portal](https://discord.com/developers/applications)
-4. Transform your application on a bot and copy the token
-5. Execute Discor and insert the bot token.
+4. Turn your Application on a Bot and copy the secret token
+5. Execute Discor and insert the secret token
 
 <br><br>
 
