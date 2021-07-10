@@ -1,12 +1,17 @@
 # 🛸 Discor
+> Fast Discord bots creation.
 
-<img src="./src/Views/img/banner.png" widht="100" height="400"><br>
+<div align="center">
+  <img src="./src/Views/img/banner.png" widht="100" height="400"><br>
+</div>
 
-![version](https://img.shields.io/badge/Version-1.2.4-brightgreen.svg?style=for-the-badge)
-![license](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
-![npm](https://img.shields.io/badge/NPM-v12.19-purple.svg?style=for-the-badge)
-
-> Fast discord bots creation.
+<p align="center">
+  <img src="https://img.shields.io/github/license/oppsec/Discor?logo=github&logoColor=green&style=for-the-badge">
+  <img src="https://img.shields.io/github/issues/oppsec/Discor?color=green&logo=github&logoColor=green&style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/oppsec/Discor?color=green&logo=github&logoColor=green&style=for-the-badge">
+  <img src="https://img.shields.io/github/forks/oppsec/Discor?color=green&logo=github&logoColor=green&style=for-the-badge">
+  <img src="https://img.shields.io/github/languages/code-size/oppsec/Discor?color=green&logo=github&logoColor=green&style=for-the-badge">
+</p>
 
 <br><br>
 
@@ -24,8 +29,8 @@
 1. Download the .RAR file in Releases page
 2. Follow the instructions on the release section
 3. Create a application on [Discord Developer Portal](https://discord.com/developers/applications)
-4. Turn your Application on a Bot and copy the secret token
-5. Execute Discor and insert the secret token
+4. Turn your Application in a Bot and copy the secret token
+5. Execute Discor and use the copied secret token
 
 <br><br>
 
@@ -37,3 +42,18 @@
 
 ## 📚 License
 - MIT License.
+
+<br><br>
+
+### 🔨 Contributing
+
+A quick guide of how to contribute with the project.
+
+```
+1. Create a fork from Discor repository
+2. Clone the repository with git clone https://github.com/your/Discor.git
+3. Type cd Discor/
+4. Create a branch and make your changes
+5. Commit and make a git push
+6. Open a pull request
+```
